@@ -1,0 +1,44 @@
+{
+  "timestamp": "2025-10-28T10:51:40.694547",
+  "base_url": "https://popmartstt.com",
+  "registration_api": "DangKyThamDu555",
+  "phien_data": [
+    {
+      "idNgayBanHang": 75,
+      "idPhien": 135,
+      "tenPhien": "session 1",
+      "thoiGian": "10:00 - 12:00"
+    },
+    {
+      "idNgayBanHang": 75,
+      "idPhien": 136,
+      "tenPhien": "session 2",
+      "thoiGian": "13:30 - 15:30"
+    },
+    {
+      "idNgayBanHang": 73,
+      "idPhien": 131,
+      "tenPhien": "session 1",
+      "thoiGian": "10:00 - 12:00"
+    },
+    {
+      "idNgayBanHang": 73,
+      "idPhien": 132,
+      "tenPhien": "session 2",
+      "thoiGian": "13:30 - 15:30"
+    },
+    {
+      "idNgayBanHang": 74,
+      "idPhien": 133,
+      "tenPhien": "session 1",
+      "thoiGian": "10:00 - 12:00"
+    },
+    {
+      "idNgayBanHang": 74,
+      "idPhien": 134,
+      "tenPhien": "session 2",
+      "thoiGian": "13:30 - 15:30"
+    }
+  ],
+  "system_ready": true
+}
