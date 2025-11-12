@@ -244,16 +244,31 @@ function Install-Dependencies {
         Write-Styled "Installing PyTorch (this may take a while)..." -Color $Theme.Info -Prefix "PyTorch"
         python -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu 2>&1 | Out-Null
         
-        # Install other requirements
-        Write-Styled "Installing other packages from requirements.txt..." -Color $Theme.Info -Prefix "Packages"
+        # Install other requirements from requirements.txt
+        Write-Styled "Installing packages from requirements.txt..." -Color $Theme.Info -Prefix "Packages"
         python -m pip install -r $requirementsPath 2>&1 | Out-Null
+        
+        # Ensure all required packages are installed (backup list)
+        $requiredPackages = @(
+            "requests", "pillow", "numpy", "openpyxl", "pandas", 
+            "matplotlib", "tqdm", "opencv-python", "fastapi", "uvicorn"
+        )
+        
+        Write-Styled "Verifying all required packages are installed..." -Color $Theme.Info -Prefix "Verify"
+        foreach ($package in $requiredPackages) {
+            python -m pip show $package 2>&1 | Out-Null
+            if ($LASTEXITCODE -ne 0) {
+                Write-Styled "Installing missing package: $package" -Color $Theme.Warning -Prefix "Missing"
+                python -m pip install $package 2>&1 | Out-Null
+            }
+        }
         
         if ($LASTEXITCODE -eq 0) {
             Write-Styled "All dependencies installed successfully!" -Color $Theme.Success -Prefix "Success"
             return $true
         } else {
-            # Try without torch (might already be installed)
-            Write-Styled "Retrying installation..." -Color $Theme.Warning -Prefix "Retry"
+            # Final retry with requirements.txt
+            Write-Styled "Final retry with requirements.txt..." -Color $Theme.Warning -Prefix "Retry"
             python -m pip install -r $requirementsPath --ignore-installed 2>&1 | Out-Null
             if ($LASTEXITCODE -eq 0) {
                 Write-Styled "Dependencies installed (with warnings)" -Color $Theme.Success -Prefix "Success"
@@ -343,8 +358,8 @@ function Install-Project {
 
 # Execute installation
 try {
-    # ⚠️ THAY ĐỔI URL NÀY THÀNH URL REPO CỦA BẠN
-    $repoUrl = "https://github.com/YOUR_USERNAME/YOUR_REPO.git"
+    # Repository URL
+    $repoUrl = "https://github.com/AdminCNTT/mart.git"
     
     # ⚠️ CÓ THỂ THAY ĐỔI ĐƯỜNG DẪN CÀI ĐẶT
     $installPath = "$env:USERPROFILE\POPMART2"
